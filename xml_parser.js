@@ -84,13 +84,14 @@ async function saveJson(data) {
 		useUnifiedTopology: true
 	})
 		.then(response => {
-			console.log(response)
-			// Function call
-			Testing.insertMany(data).then(function () {
-				console.log("Data inserted")  // Success
-			}).catch(function (error) {
-				console.log(error)      // Failure
-			});
+			console.log('Connected: ', JSON.stringify(response));
+			console.log(typeof data)
+			// // Function call
+			// Testing.insertMany(data).then(function () {
+			// 	console.log("Data inserted")  // Success
+			// }).catch(function (error) {
+			// 	console.log(error)      // Failure
+			// });
 		})
 		.catch(error => console.log(error));
 
