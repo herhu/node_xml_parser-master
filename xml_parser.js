@@ -1,10 +1,30 @@
 const fs = require('fs');
 const xml2js = require('xml2js');
-const util = require('util');
+const mongoose = require('mongoose');
 const moment = require('moment');
 const path = require("path");
 const _ = require("underscore");
 const filePath = "//200.72.154.98/d$/MICROS/OPERA/export/OPERA/htj/";
+
+// Database connection
+mongoose.connect('mongodb:admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useUnifiedTopology: true
+})
+	.then(response => console.log(response))
+	.catch(error => console.log(error));
+
+const childSchema = new Schema({ MARKET_CODE: 'string', DETAIL: number });
+
+const parentSchema = new Schema({
+	BUSINESS_DATE: { type: Date, default: Date.now },
+	LIST_ROOM_TYPE: [childSchema],
+});
+
+// User model
+const User = mongoose.model('Testing', parentSchema);
+
 
 async function GetlastOne(dir) {
 	let files = fs.readdirSync(dir);
@@ -57,36 +77,31 @@ async function getJson(file) {
 			console.log('we are filtering...', typeof result)
 			let availableRooms = await filteringRooms(result);
 			console.log('we are saving...')
-			savejson(availableRooms)
+			saveJson(availableRooms)
 		});
 	});
 
 }
 
-async function savejson(data) {
+async function saveJson(data) {
 
-	let json = JSON.stringify(data);
-
-	fs.writeFile("output.json", json, 'utf8', function (err) {
-		if (err) {
-			console.log("An error occured while writing JSON Object to File.");
-			process.exit(1)
-		}
-
-		console.log("JSON file has been saved.");
-		process.exit(1)
+	// Function call
+	User.insertMany(data).then(function () {
+		console.log("Data inserted")  // Success
+	}).catch(function (error) {
+		console.log(error)      // Failure
 	});
 }
 
 async function main() {
-	
+
 	setInterval(async function () {
 		let date = new Date();
 		if (date.getSeconds() === 0) {
 			let file = await GetlastOne(filePath)
 			if (file !== -1) {
 				console.log(`extracting the next file: ${file}`)
-				 getJson(file);
+				getJson(file);
 
 			} else {
 				console.log(file, ' is not a json.')
