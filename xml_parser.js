@@ -9,14 +9,14 @@ const Schema = mongoose.Schema;
 
 // Database connection
 async function Connection() {
-	mongoose.connect('mongodb://admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
+	return mongoose.connect('mongodb://admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
-		.then(response => {
-			console.log('Connected: ', JSON.stringify(response));
-		})
-		.catch(error => console.log(error));
+}
+
+async function closeConnection() {
+	mongoose.connection.close()
 }
 
 async function GetlastOne(dir) {
@@ -78,7 +78,6 @@ async function getJson(file) {
 
 async function saveJson(data) {
 
-	Connection()
 	// const parentSchema = new Schema({
 	// 	BUSINESS_DATE: { type: Date },
 	// 	LIST_ROOM_TYPE: [{ MARKET_CODE: String, DETAIL: Number }],
@@ -93,10 +92,13 @@ async function saveJson(data) {
 	// }).catch(function (error) {
 	// 	console.log(error)      // Failure
 	// });
+	closeConnection()
 
 }
 
 async function main() {
+
+	Connection();
 
 	setInterval(async function () {
 		let date = new Date();
