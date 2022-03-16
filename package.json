@@ -1,0 +1,17 @@
+{
+  "name": "node_xml_parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "xml_parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node xml_parser.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.1",
+    "underscore": "^1.13.2",
+    "xml2js": "^0.4.22"
+  }
+}
