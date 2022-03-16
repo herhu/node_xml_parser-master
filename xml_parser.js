@@ -78,7 +78,7 @@ async function saveJson(data) {
 	const Testing = mongoose.model('Testing', parentSchema);
 
 	// Database connection
-	mongoose.connect('mongodb:admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
+	mongoose.connect('mongodb://admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
 		useNewUrlParser: true,
 		useCreateIndex: true,
 		useUnifiedTopology: true
