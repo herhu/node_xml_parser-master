@@ -68,13 +68,13 @@ async function getJson(file) {
 async function saveJson(data) {
 
 
-	const parentSchema = new Schema({
-		BUSINESS_DATE: { type: Date },
-		LIST_ROOM_TYPE: [{ MARKET_CODE: String, DETAIL: Number }],
-	});
+	// const parentSchema = new Schema({
+	// 	BUSINESS_DATE: { type: Date },
+	// 	LIST_ROOM_TYPE: [{ MARKET_CODE: String, DETAIL: Number }],
+	// });
 
-	// User model
-	const Testing = mongoose.model('Testing', parentSchema);
+	// // User model
+	// const Testing = mongoose.model('Testing', parentSchema);
 
 	// Database connection
 	mongoose.connect('mongodb://admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
