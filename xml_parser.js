@@ -16,7 +16,7 @@ mongoose.connect('mongodb:admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-no
 	.then(response => console.log(response))
 	.catch(error => console.log(error));
 
-const childSchema = new Schema({ MARKET_CODE: 'string', DETAIL: number });
+const childSchema = new Schema({ MARKET_CODE: String, DETAIL: Number });
 
 const parentSchema = new Schema({
 	BUSINESS_DATE: { type: Date, default: Date.now },
