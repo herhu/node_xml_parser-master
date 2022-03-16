@@ -67,11 +67,10 @@ async function getJson(file) {
 
 async function saveJson(data) {
 
-	const childSchema = new Schema({ MARKET_CODE: String, DETAIL: Number });
 
 	const parentSchema = new Schema({
 		BUSINESS_DATE: { type: Date },
-		LIST_ROOM_TYPE: [childSchema],
+		LIST_ROOM_TYPE: [{ MARKET_CODE: String, DETAIL: Number }],
 	});
 
 	// User model
@@ -86,8 +85,6 @@ async function saveJson(data) {
 			console.log('Connected: ', JSON.stringify(response));
 		})
 		.catch(error => console.log(error));
-
-	console.log(typeof data)
 	// // Function call
 	// Testing.insertMany(data).then(function () {
 	// 	console.log("Data inserted")  // Success
