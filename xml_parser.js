@@ -80,21 +80,20 @@ async function saveJson(data) {
 	// Database connection
 	mongoose.connect('mongodb://admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
 		useNewUrlParser: true,
-		useCreateIndex: true,
 		useUnifiedTopology: true
 	})
 		.then(response => {
 			console.log('Connected: ', JSON.stringify(response));
-			console.log(typeof data)
-			// // Function call
-			// Testing.insertMany(data).then(function () {
-			// 	console.log("Data inserted")  // Success
-			// }).catch(function (error) {
-			// 	console.log(error)      // Failure
-			// });
 		})
 		.catch(error => console.log(error));
 
+	console.log(typeof data)
+	// // Function call
+	// Testing.insertMany(data).then(function () {
+	// 	console.log("Data inserted")  // Success
+	// }).catch(function (error) {
+	// 	console.log(error)      // Failure
+	// });
 
 }
 
