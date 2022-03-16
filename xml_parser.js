@@ -5,6 +5,7 @@ const moment = require('moment');
 const path = require("path");
 const _ = require("underscore");
 const filePath = "//200.72.154.98/d$/MICROS/OPERA/export/OPERA/htj/";
+const Schema = mongoose.Schema;
 
 // Database connection
 mongoose.connect('mongodb:admin:2Rm3tuuarWMwV@52.70.193.254:27017/bulletproof-nodejs', {
