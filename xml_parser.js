@@ -79,7 +79,7 @@ async function getJson(file) {
 async function saveJson(data) {
 
 	const parentSchema = new Schema({
-		BUSINESS_DATE: { type: Date },
+		BUSINESS_DATE: { type: String },
 		LIST_ROOM_TYPE: [{ MARKET_CODE: String, DETAIL: Number }],
 	});
 
