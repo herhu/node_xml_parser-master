@@ -89,11 +89,12 @@ async function saveJson(data) {
 	// Function call
 	Testing.insertMany(data).then(function () {
 		console.log("Data inserted")  // Success
+		closeConnection();
+		process.exit(1);
 	}).catch(function (error) {
 		console.log(error)      // Failure
+		process.exit(1);
 	});
-	closeConnection();
-	process.exit(1);
 
 }
 
