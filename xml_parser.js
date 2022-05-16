@@ -2,6 +2,7 @@ const fs = require('fs');
 const xml2js = require('xml2js');
 const mongoose = require('mongoose');
 const moment = require('moment');
+require('mongodb-moment')(moment);
 const path = require("path");
 const _ = require("underscore");
 const filePath = "//200.72.154.98/d$/MICROS/OPERA/export/OPERA/htj/";
@@ -45,8 +46,9 @@ async function filteringRooms(json) {
 	let rooms = json.DETAIL_AVAIL.LIST_G_5[0].G_5[0].LIST_DAY[0].DAY
 	let roomsFromToday = rooms.filter((value, index) => index >= specificIndex);
 	return roomsFromToday.map(q => {
+		let d = q.BUSINESS_DATE[0].split('-')
 		return {
-			BUSINESS_DATE: q.BUSINESS_DATE[0],
+			BUSINESS_DATE: q.BUSINESS_DATE[0] !== 'Total Available' ? moment(`20${d[2]}-${d[1]}-${d[0]}`).format('YYYY-MM-DD') : null,
 			LIST_ROOM_TYPE: q.LIST_ROOM_TYPE[0].ROOM_TYPE.map(z => {
 				return {
 					MARKET_CODE: z.MARKET_CODE[0],
@@ -79,15 +81,19 @@ async function getJson(file) {
 async function saveJson(data) {
 
 	const parentSchema = new Schema({
-		BUSINESS_DATE: { type: String },
+		BUSINESS_DATE: { type: Date },
 		LIST_ROOM_TYPE: [{ MARKET_CODE: String, DETAIL: Number }],
+
 	});
 
 	// User model
-	const Testing = mongoose.model('Testing', parentSchema);
+	const Room = mongoose.model('Rooms', parentSchema);
+
+	console.log('Droping collection')
+	Room.collection.drop();
 
 	// Function call
-	Testing.insertMany(data).then(function () {
+	Room.insertMany(data).then(function () {
 		console.log("Data inserted")  // Success
 		closeConnection();
 		process.exit(1);
